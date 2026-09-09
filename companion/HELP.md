@@ -20,3 +20,7 @@ Older displays may not support authentication correctly, so if you are having is
 - Power State
 
 New models (such as the TH-49CQE1W), require an updated communication protocol, if using one of these new models you will also get the power status reported as a variable.
+
+**Power State Polling (new protocol only)**
+
+When "Enable Polling" is checked, the module queries the display's power state (`QPW`) at the configured polling interval and updates the `powerState` variable (`On`/`Off`) and the "Show Power State On Button" feedback from the response. Commands are sent one at a time, so a slow display will not receive overlapping commands.
