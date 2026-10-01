@@ -29,7 +29,7 @@ class PanasonicTVTHInstance extends InstanceBase {
 		this.DATA = { ...this.DATA }
 
 		this.socket = undefined // TCP Socket connection
-		this.socketTimer = undefined // Timer for TCP Socket reconnection
+		this.lastConnectError = 0 // Time of the last failed connection attempt
 
 		this.INTERVAL = undefined // Polling Interval
 
@@ -53,25 +53,19 @@ class PanasonicTVTHInstance extends InstanceBase {
 		this.initPresets()
 
 		this.initConnection()
+		this.initPolling()
 
 		this.checkFeedbacks()
 		this.checkVariables()
 	}
 
 	async destroy() {
-		if (this.socket !== undefined) {
-			this.socket.destroy()
-		}
-
-		if (this.socketTimer !== undefined) {
-			clearInterval(this.socketTimer)
-		}
-
 		if (this.INTERVAL !== undefined) {
 			clearInterval(this.INTERVAL)
 		}
 
 		this.resetCommandQueue()
+		this.closeSocket()
 
 		this.log('debug', 'destroy ' + this.id)
 	}

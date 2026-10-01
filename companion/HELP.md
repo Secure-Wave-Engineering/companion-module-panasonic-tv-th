@@ -24,3 +24,5 @@ New models (such as the TH-49CQE1W), require an updated communication protocol, 
 **Power State Polling (new protocol only)**
 
 When "Enable Polling" is checked, the module queries the display's power state (`QPW`) at the configured polling interval and updates the `powerState` variable (`On`/`Off`) and the "Show Power State On Button" feedback from the response. Commands are sent one at a time, so a slow display will not receive overlapping commands.
+
+Some displays close the network connection after every reply. The module handles this automatically: the connection is re-opened whenever there is something to send, and this is not reported as an error. The connection status only turns red when the display cannot be reached at all.

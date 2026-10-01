@@ -8,6 +8,7 @@ See HELP.md and LICENSE
 - Support displays with protect mode off (`NTCONTROL 0`)
 - Send commands one at a time so a slow display does not receive overlapping commands
 - Fix power state feedback not being registered
+- Displays that close the connection after each reply are reconnected silently instead of being reported as disconnected
 
 **v2.0.0**
 
