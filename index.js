@@ -25,10 +25,17 @@ class PanasonicTVTHInstance extends InstanceBase {
 			...presets,
 		})
 
+		// Give each instance its own copy of the state object instead of sharing the one from constants
+		this.DATA = { ...this.DATA }
+
 		this.socket = undefined // TCP Socket connection
-		this.socketTimer = undefined // Timer for TCP Socket reconnection
+		this.lastConnectError = 0 // Time of the last failed connection attempt
 
 		this.INTERVAL = undefined // Polling Interval
+
+		this.commandQueue = [] // Commands waiting to be sent (new protocol only)
+		this.pendingCommand = undefined // Command currently awaiting a response
+		this.responseTimer = undefined // Timeout for the pending command
 	}
 
 	async init(config) {
@@ -46,21 +53,21 @@ class PanasonicTVTHInstance extends InstanceBase {
 		this.initPresets()
 
 		this.initConnection()
+		this.initPolling()
 
 		this.checkFeedbacks()
 		this.checkVariables()
 	}
 
 	async destroy() {
-		if (this.socket !== undefined) {
-			this.socket.destroy()
-		}
-
 		if (this.INTERVAL !== undefined) {
 			clearInterval(this.INTERVAL)
 		}
 
-		this.debug('destroy', this.id)
+		this.resetCommandQueue()
+		this.closeSocket()
+
+		this.log('debug', 'destroy ' + this.id)
 	}
 }
 
