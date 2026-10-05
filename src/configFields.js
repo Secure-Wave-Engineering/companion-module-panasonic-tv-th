@@ -70,7 +70,7 @@ module.exports = {
 				width: 12,
 				label: 'Protocol Info',
 				value:
-					'On older displays, make sure you are using "Protocol 1" in the Display Settings instead of "Protocol 2".',
+					'In the display\'s network settings, choose the command protocol to match the model: old-protocol models need "Protocol 1", new-protocol models (such as the TH-49CQE1W and TH-55EQ1) need "Protocol 2".',
 			},
 			{
 				type: 'static-text',
