@@ -26,6 +26,7 @@ module.exports = {
 		{ id: 'TH-43CQ1W', label: 'TH-43CQ1W', protocol: 'old' },
 
 		{ id: 'TH-49CQE1W', label: 'TH-49CQE1W', protocol: 'new' },
+		{ id: 'TH-55EQ1', label: 'TH-55EQ1', protocol: 'new' },
 
 		{ id: 'other', label: 'Other', protocol: undefined },
 	],
